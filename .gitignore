@@ -1,0 +1,33 @@
+# 🔐 فایل‌های حاوی رمز — هرگز کامیت نشوند
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+!.env.example
+
+# Wrangler / Cloudflare
+.wrangler/
+worker/.wrangler/
+
+# توکن و کلید
+*secret*
+*secrets*
+*.pem
+*.key
+
+# وابستگی‌ها و بیلد
+node_modules/
+dist/
+*.log
+
+# آرشیوها و فایل‌های موقت
+*.rar
+*.zip
+_tmp_*
+shots/_check-*.png
+
+# سیستم‌عامل و ادیتور
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

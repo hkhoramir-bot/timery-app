@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>پیش‌نمایش Overlay</title>
+  <style>
+    body { font-family: Tahoma, sans-serif; background: #f8fafc; margin: 0; padding: 40px; }
+    .demo { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; max-width: 600px; }
+  </style>
+</head>
+<body>
+  <div class="demo">
+    <h2>صفحهٔ نمونه</h2>
+    <p>این محتوای آزمایشی صفحهٔ وب است. overlay تایمر باید روی این صفحه نمایش داده شود.</p>
+  </div>
+
+  <script>
+    // شبیه‌سازی chrome.runtime برای تست content script
+    window.__listeners = [];
+    window.chrome = {
+      runtime: {
+        onMessage: {
+          addListener: (fn) => window.__listeners.push(fn)
+        },
+        getURL: (p) => p,
+        sendMessage: (msg) => {
+          console.log('content → sw:', JSON.stringify(msg));
+          return Promise.resolve({ success: true });
+        }
+      }
+    };
+  </script>
+  <script src="../content_overlay.js"></script>
+  <script>
+    setTimeout(function () {
+      window.__listeners.forEach(function (fn) {
+        fn({
+          action: 'sync_state',
+          timers: [
+            { id: 't1', title: 'چای', totalSeconds: 300, endTime: Date.now() + 214000, remaining: 214, paused: false, color: '#10b981' },
+            { id: 't2', title: 'پومودورو', totalSeconds: 1500, endTime: Date.now() + 940000, remaining: 940, paused: true, color: '#6366f1' }
+          ],
+          settings: { titleCountdown: true }
+        }, {});
+      });
+    }, 300);
+  </script>
+</body>
+</html>

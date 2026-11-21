@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head><meta charset="UTF-8"><title>پیش‌نمایش در قاب ۳۸۰px</title>
+<style>
+  body { margin:0; background:#cbd5e1; display:flex; gap:16px; padding:16px; font-family:Tahoma; }
+  iframe { width:380px; height:600px; border:0; border-radius:12px; background:#fff; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+  pre { direction:ltr; text-align:left; font-size:11px; max-width:520px; }
+</style>
+</head>
+<body>
+  <iframe id="f" src="/tests/preview.html"></iframe>
+  <pre id="out">waiting…</pre>
+  <script>
+    var f = document.getElementById('f');
+    f.addEventListener('load', function () {
+      setTimeout(function () {
+        var doc = f.contentDocument, limit = 380, report = [];
+        doc.querySelectorAll('*').forEach(function (el) {
+          var r = el.getBoundingClientRect();
+          var inner = el.scrollWidth - el.clientWidth;
+          if (r.width > limit + 1 || r.right > limit + 1 || r.left < -1 || inner > 1) {
+            report.push(el.tagName + (el.id ? '#' + el.id : '') + ' .' + (el.className || '').toString().split(' ')[0] +
+              ' | w=' + Math.round(r.width) + ' left=' + Math.round(r.left) + ' right=' + Math.round(r.right) +
+              ' scrollW=' + el.scrollWidth + ' clientW=' + el.clientWidth + ' inner=' + inner);
+          }
+        });
+        document.getElementById('out').textContent =
+          'docScrollW=' + doc.documentElement.scrollWidth +
+          ' bodyScrollW=' + doc.body.scrollWidth +
+          ' bodyW=' + Math.round(doc.body.getBoundingClientRect().width) +
+          '\n---\n' + report.slice(0, 25).join('\n');
+      }, 900);
+    });
+  </script>
+</body>
+</html>

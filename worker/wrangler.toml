@@ -1,0 +1,20 @@
+name = "timery-bale-relay"
+main = "bale-worker.js"
+compatibility_date = "2024-11-01"
+
+# ⚠️ مهم: اگر این بخش کامنت بماند و deploy کنید، بایندینگ KV حذف می‌شود
+#    و «اتصال با کد» از کار می‌افتد. شناسه را با این دستور بگیرید:
+#       wrangler kv namespace list
+[[kv_namespaces]]
+binding = "CHATS"
+id = "2bc281a20c2042bca6348843b468efb4"
+
+[vars]
+# نام کاربری ربات بله، بدون @
+# اگر getMe جواب ندهد، از همین مقدار برای ساخت لینک اتصال استفاده می‌شود
+BOT_USERNAME = "timery_bot"
+
+# Secret ها (با wrangler secret put، نه اینجا):
+#   BALE_TOKEN        توکن ربات بله
+#   TIMERY_KEYS       کلید(های) افزونه، جدا شده با کاما — باید با js/config.js یکی باشد
+#   WEBHOOK_SECRET    رمز مسیر webhook
